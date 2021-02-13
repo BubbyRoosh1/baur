@@ -67,7 +67,7 @@ async fn install(name: &str) -> Result<(), Box<dyn Error>> {
             pkgdir.push(&package.name);
 
             // TODO: Proper git pull stuff lol
-            fs::remove_dir_all(&pkgdir)?;
+            fs::remove_dir_all(&pkgdir).ok();
 
             Repository::clone(&url, &pkgdir)?;
 
