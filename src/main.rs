@@ -38,6 +38,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     } else if matches.is_present("clean") {
         clean_cache()?;
+        println!("Cleaned cache");
     }
 
     Ok(())
@@ -64,6 +65,10 @@ async fn install(name: &str) -> Result<(), Box<dyn Error>> {
             url += ".git";
             let mut pkgdir = cache_dir.clone();
             pkgdir.push(&package.name);
+
+            // TODO: Proper git pull stuff lol
+            fs::remove_dir_all(&pkgdir)?;
+
             Repository::clone(&url, &pkgdir)?;
 
             println!("Installing: {}", package.name);
