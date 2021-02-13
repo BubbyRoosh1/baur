@@ -68,10 +68,9 @@ async fn install(name: &str) -> Result<(), Box<dyn Error>> {
 
             // TODO: Proper git pull stuff lol
             fs::remove_dir_all(&pkgdir).ok();
-
             Repository::clone(&url, &pkgdir)?;
 
-            println!("Installing: {}", package.name);
+            println!("Installing: {} Version: {}", package.name, package.version);
             // Moment
             Command::new("makepkg")
                 .current_dir(pkgdir)
@@ -89,6 +88,12 @@ async fn query(search: &str) -> Result<(), Box<dyn Error>> {
     let raur = raur::Handle::new();
     let mut pkgs = raur.search_by(search, SearchBy::Name).await?;
     pkgs.sort_unstable_by(|a, b| a.name.cmp(&b.name));
-    pkgs.iter().for_each(|p| println!("{}", p.name));
+    pkgs.iter().for_each(|p| {
+        if let Some(desc) = &p.description {
+            println!("{}: {}", p.name, desc);
+        } else {
+            println!("{}", p.name);
+        }
+    });
     Ok(())
 }
