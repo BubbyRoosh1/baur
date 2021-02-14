@@ -30,13 +30,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
         ))
         .parse();
 
-    if parsed.get_option("query").unwrap() != "" {query(&parsed.get_option("query").unwrap()).await?}
+    if parsed.get_option("query").unwrap() != "" {
+        query(&parsed.get_option("query").unwrap()).await?
+    }
     if parsed.get_option("install").unwrap() != "" {
         for package in parsed.get_option("install").unwrap().split_whitespace() {
             install(package).await?;
         }
     }
-    if parsed.get_flag("clean").unwrap() {clean_cache()?;println!("Cleaned cache")}
+    if parsed.get_flag("clean").unwrap() {
+        clean_cache()?;println!("Cleaned cache")
+    }
     Ok(())
 }
 
