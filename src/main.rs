@@ -1,5 +1,5 @@
 // Copyright (C) 2021 BubbyRoosh
-use clap::{App, Arg};
+use rargsxd::*;
 use raur::{Raur, SearchBy};
 use git2::Repository;
 use std::error::Error;
@@ -8,39 +8,35 @@ use std::process::Command;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    let matches = App::new("baur")
+    let mut parsed = ArgParser::new("baur");
+    parsed.author("BubbyRoosh")
         .version("0.1.0")
-        .author("BubbyRoosh")
-        .about("Bubby's AUR helper.. it's not bad I swear it's just minimalism lol\nCopyright (C) 2021 BubbyRoosh")
-        .usage("baur [args] [packages]")
-        .args(&[
-            Arg::with_name("install")
-                .help("Installs the given package(s)")
-                .short("i")
-                .takes_value(true),
+        .copyright("Copyright (C) 2021 BubbyRoosh")
+        .info("Bubby's AUR helper")
+        .require_args(true)
+        .args(vec!(
+                Arg::new("install")
+                    .short("i")
+                    .help("Installs the given package(s)")
+                    .option(""),
+                Arg::new("query")
+                    .short("q")
+                    .help("Queries the AUR with the given name")
+                    .option(""),
+                Arg::new("clean")
+                    .short("c")
+                    .help("Cleans the cache")
+                    .flag(false),
+        ))
+        .parse();
 
-            Arg::with_name("query")
-                .help("Queries the AUR with the given name")
-                .short("q")
-                .takes_value(true),
-
-            Arg::with_name("clean")
-                .help("Cleans the cache")
-                .short("c")
-        ])
-        .get_matches();
-
-    if matches.is_present("query") {
-        query(matches.value_of("query").unwrap()).await?;
-    } else if matches.is_present("install") {
-        for package in matches.value_of("install").unwrap().split_whitespace() {
+    if parsed.get_option("query").unwrap() != "" {query(&parsed.get_option("query").unwrap()).await?}
+    if parsed.get_option("install").unwrap() != "" {
+        for package in parsed.get_option("install").unwrap().split_whitespace() {
             install(package).await?;
         }
-    } else if matches.is_present("clean") {
-        clean_cache()?;
-        println!("Cleaned cache");
     }
-
+    if parsed.get_flag("clean").unwrap() {clean_cache()?;println!("Cleaned cache")}
     Ok(())
 }
 
