@@ -1,7 +1,12 @@
 // Copyright (C) 2021 BubbyRoosh
+
+use colorful::*;
+
+use git2::Repository;
+
 use rargsxd::*;
 use raur::{Raur, SearchBy};
-use git2::Repository;
+
 use std::error::Error;
 use std::fs;
 use std::process::Command;
@@ -13,18 +18,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .version("0.1.0")
         .copyright("Copyright (C) 2021 BubbyRoosh")
         .info("Bubby's AUR helper")
+        .usage("baur [-i/-q/-c] <package>")
         .require_args(true)
         .args(vec!(
                 Arg::new("install")
-                    .short("i")
+                    .short('i')
                     .help("Installs the given package(s)")
                     .option(""),
                 Arg::new("query")
-                    .short("q")
+                    .short('q')
                     .help("Queries the AUR with the given name")
                     .option(""),
                 Arg::new("clean")
-                    .short("c")
+                    .short('c')
                     .help("Cleans the cache")
                     .flag(false),
         ))
@@ -90,7 +96,7 @@ async fn query(search: &str) -> Result<(), Box<dyn Error>> {
     pkgs.sort_unstable_by(|a, b| a.name.cmp(&b.name));
     pkgs.iter().for_each(|p| {
         if let Some(desc) = &p.description {
-            println!("{}: {}", p.name, desc);
+            println!("{}: {}", p.name.clone().magenta(), desc);
         } else {
             println!("{}", p.name);
         }

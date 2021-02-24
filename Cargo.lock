@@ -39,6 +39,7 @@ checksum = "904dfeac50f3cdaba28fc6f57fdcddb75f49ed61346676a78c4ffe55877802fd"
 name = "baur"
 version = "0.1.0"
 dependencies = [
+ "colorful",
  "dirs",
  "git2",
  "rargsxd",
@@ -89,6 +90,12 @@ name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
+
+[[package]]
+name = "colorful"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0bca1619ff57dd7a56b58a8e25ef4199f123e78e503fe1653410350a1b98ae65"
 
 [[package]]
 name = "constant_time_eq"
@@ -717,9 +724,9 @@ dependencies = [
 
 [[package]]
 name = "rargsxd"
-version = "0.1.0"
+version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e20548d11bc26a6f4fae16498f953f895fe2a6fe0f3e499923efc6c329e25615"
+checksum = "c065f04f37fbeb8f40a62f2a857761721f1b009f8798963d1e618fc02a71cc8e"
 
 [[package]]
 name = "raur"
