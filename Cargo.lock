@@ -724,9 +724,9 @@ dependencies = [
 
 [[package]]
 name = "rargsxd"
-version = "0.1.4"
+version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c065f04f37fbeb8f40a62f2a857761721f1b009f8798963d1e618fc02a71cc8e"
+checksum = "059aab69ce92156b6ef33d9c8bf634af0598aefc682ea085deb65d535200e1f5"
 
 [[package]]
 name = "raur"
